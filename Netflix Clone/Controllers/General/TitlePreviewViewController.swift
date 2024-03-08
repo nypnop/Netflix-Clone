@@ -22,13 +22,14 @@ class TitlePreviewViewController: UIViewController {
 
         previewMovieView.genreCollectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
         
-        previewMovieView.reviewView.reviewCollectionView.register(ReviewCollectionViewCell.self, forCellWithReuseIdentifier: ReviewCollectionViewCell.identifier)
+        previewMovieView.reviewView.reviewTable.register(ReviewTableViewCell.self, forCellReuseIdentifier: ReviewTableViewCell.identifier)
         
         previewMovieView.genreCollectionView.dataSource = self
         previewMovieView.genreCollectionView.delegate = self
         
-        previewMovieView.reviewView.reviewCollectionView.delegate = self
-        previewMovieView.reviewView.reviewCollectionView.dataSource = self
+        previewMovieView.reviewView.reviewTable.dataSource = self
+        previewMovieView.reviewView.reviewTable.delegate = self
+        
         
     }
     
@@ -36,7 +37,7 @@ class TitlePreviewViewController: UIViewController {
         do {
             movieDetails = try APICaller.shared.getMoviesDetail(movie_id: model.movie_id)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
         
         guard let movieDetails = movieDetails else {
@@ -44,42 +45,34 @@ class TitlePreviewViewController: UIViewController {
         }
         title = movieDetails.original_name ?? movieDetails.original_title ?? ""
         previewMovieView.topContentView.titleLabel.text = movieDetails.original_name ?? movieDetails.original_title ?? ""
-        previewMovieView.overviewLabel.text = movieDetails.overview ?? ""
-        updateGenre(genres: movieDetails.genres)
         previewMovieView.topContentView.infoAboveTitleLabel.text = getInfoAboveTitle(runtime: movieDetails.runtime ?? 0, releaseDate: movieDetails.release_date ?? "")
-        previewMovieView.topContentView.ratingLabel.text = getVoteAverage(voteAverage: movieDetails.vote_average ?? 0)
+        previewMovieView.topContentView.ratingLabel.text = getVoteAverage(voteAverage: movieDetails.vote_average )
         previewMovieView.topContentView.voteCountLabel.text = "(\(movieDetails.vote_count))"
-        
-//        guard let url = URL(string: "https://www.youtube.com/embed/\(model.youtubeView.id.videoId)") else {return}
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.backdrop_path)") else {
-            return
-        }
-        previewMovieView.topContentView.webView.sd_setImage(with: url,completed: nil)
-//        previewMovieView.topContentView.webView.load(URLRequest(url: url))
+        guard let url = URL(string: "https://www.youtube.com/embed/\(model.youtubeView.id.videoId)") else {return}
+//        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.backdrop_path ?? "")") else {
+//            return
+//        }
+//        previewMovieView.topContentView.webView.sd_setImage(with: url,completed: nil)
+        previewMovieView.topContentView.webView.load(URLRequest(url: url))
         
         do {
             reviewResponse = try APICaller.shared.getReviewsMovie(movie_id: model.movie_id)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
         
-        handleReviewData(review: reviewResponse!.results)
-        
-        
-        resizeScrollView()
-        
-    }
-    
-    @objc func seeAllCastPressed() {
-        
-        if review.isEmpty {
+        guard let reviewResponse = reviewResponse else {
             return
         }
         
-//        let vc = AllCastTableViewController()
-//        vc.cast = cast
-//        vc.title = "Review"
-//        navigationController?.pushViewController(vc, animated: true)
+        previewMovieView.overviewLabel.text = movieDetails.overview ?? ""
+        
+        updateGenre(genres: movieDetails.genres)
+        
+        handleReviewData(reviews: reviewResponse.results)
+        
+//        resizeScrollView()
+        
     }
     
     func getVoteAverage(voteAverage: Float) -> String {
@@ -93,11 +86,10 @@ class TitlePreviewViewController: UIViewController {
         }
     }
     
-    func handleReviewData(review: [Reviews]) {
+    func handleReviewData(reviews: [Reviews]) {
         
-        self.review = review
-        
-        previewMovieView.reviewView.reviewCollectionView.reloadData()
+        review = reviews
+        previewMovieView.reviewView.reviewTable.reloadData()
     }
     
     func updateGenre(genres: [Genre]) {
@@ -124,23 +116,23 @@ class TitlePreviewViewController: UIViewController {
         return nil
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        resizeScrollView()
-    }
-    
-    func resizeScrollView() {
-        
-        view.layoutIfNeeded()
-        let contentRect: CGRect = previewMovieView.contentView.frame
-        
-        previewMovieView.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            previewMovieView.scrollView.heightAnchor.constraint(equalToConstant: contentRect.size.height),
-            previewMovieView.scrollView.widthAnchor.constraint(equalToConstant: contentRect.size.width)
-        ])
-        
-        previewMovieView.scrollView.contentSize = contentRect.size
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        resizeScrollView()
+//    }
+//    
+//    func resizeScrollView() {
+//        
+//        view.layoutIfNeeded()
+//        let contentRect: CGRect = previewMovieView.contentView.frame
+//        
+//        previewMovieView.scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            previewMovieView.scrollView.heightAnchor.constraint(equalToConstant: contentRect.size.height),
+//            previewMovieView.scrollView.widthAnchor.constraint(equalToConstant: contentRect.size.width)
+//        ])
+//        
+//        previewMovieView.scrollView.contentSize = contentRect.size
+//    }
     
 }
 
@@ -150,38 +142,24 @@ extension TitlePreviewViewController: UICollectionViewDataSource, UICollectionVi
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == previewMovieView.reviewView.reviewCollectionView {
-            return review.count < 15 ? review.count : 14
-        } else {
-            return movieDetails?.genres.count ?? 0
-        }
+
+        return movieDetails?.genres.count ?? 0
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == previewMovieView.reviewView.reviewCollectionView {
-            return setReviewCell(collectionView: collectionView, indexPath: indexPath)
-        } else {
-            return setGenreCell(collectionView: collectionView, indexPath: indexPath)
-        }
+
+        return setGenreCell(collectionView: collectionView, indexPath: indexPath)
         
     }
     
-    func setReviewCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.identifier, for: indexPath) as! ReviewCollectionViewCell
-        
-        cell.authorLabel.text = review[indexPath.row].author
-        cell.dateLabel.text = review[indexPath.row].updated_at
-        cell.contentLabel.text = review[indexPath.row].content
-        
-        return cell
-    }
     
     func setGenreCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
         
+//        print(movieDetails?.genres[indexPath.row])
+//        print(review)
         cell.label.text = movieDetails?.genres[indexPath.row].name
         cell.label.font = .systemFont(ofSize: 12)
         
@@ -190,3 +168,36 @@ extension TitlePreviewViewController: UICollectionViewDataSource, UICollectionVi
     }
     
 }
+
+extension TitlePreviewViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return review.count
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return setReviewCell(tableView: tableView, indexPath: indexPath)
+    }
+    
+    func setReviewCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+    
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ReviewTableViewCell.identifier, for: indexPath) as? ReviewTableViewCell else {return UITableViewCell()}
+        
+        print(review)
+//        cell.authorLabel.text = review[indexPath.row].author
+//        cell.contentLabel.text = review[indexPath.row].content
+        cell.authorLabel.text = "Khodi"
+        cell.contentLabel.text = "Keren sangat"
+        
+        
+        return cell
+    }
+    
+    
+}
+
+

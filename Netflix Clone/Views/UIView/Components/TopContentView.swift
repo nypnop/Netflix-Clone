@@ -10,17 +10,17 @@ import WebKit
 
 class TopContentView: UIView {
 
-//    let webView: WKWebView = {
-//        let webView = WKWebView()
-//        webView.translatesAutoresizingMaskIntoConstraints = false
-//        return webView
-//    }()
-    
-    let webView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
-        return imageView
+    let webView: WKWebView = {
+        let webView = WKWebView()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
     }()
+    
+//    let webView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.contentMode = .scaleToFill
+//        return imageView
+//    }()
 
     let infoAboveTitleLabel: UILabel = {
         let label = UILabel()
@@ -77,10 +77,10 @@ class TopContentView: UIView {
         return label
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        webView.frame = bounds
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        webView.frame = bounds
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -103,7 +103,7 @@ class TopContentView: UIView {
     func setConstraints() {
     
         let webViewConstraints = [
-            webView.topAnchor.constraint(equalTo: topAnchor, constant: 100),
+            webView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             webView.leadingAnchor.constraint(equalTo: leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: trailingAnchor),
             webView.heightAnchor.constraint(equalToConstant: 250)

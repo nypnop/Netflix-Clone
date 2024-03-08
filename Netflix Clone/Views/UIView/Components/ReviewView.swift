@@ -16,19 +16,11 @@ class ReviewView: UIView {
         return label
     }()
     
-    let reviewCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        
-        let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        collectionView.backgroundColor = .systemGray5
-        collectionView.collectionViewLayout = layout
-        collectionView.layer.cornerRadius = 10
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        return collectionView
-        
+    let reviewTable: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+//        table.register(ReviewTableViewCell.self, forCellReuseIdentifier: ReviewTableViewCell.identifier)
+        return table
     }()
     
     override init(frame: CGRect) {
@@ -37,7 +29,7 @@ class ReviewView: UIView {
         backgroundColor = .systemGray5
         
         addSubview(label)
-        addSubview(reviewCollectionView)
+        addSubview(reviewTable)
         
         setContraints()
     }
@@ -55,10 +47,11 @@ class ReviewView: UIView {
         
         
         let reviewCollectionViewConstraints = [
-            reviewCollectionView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 5),
-            reviewCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            reviewCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            reviewCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            reviewTable.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
+            reviewTable.leadingAnchor.constraint(equalTo: superview?.leadingAnchor ?? leadingAnchor),
+            reviewTable.trailingAnchor.constraint(equalTo: superview?.trailingAnchor ?? trailingAnchor),
+            reviewTable.bottomAnchor.constraint(equalTo: superview?.bottomAnchor ?? bottomAnchor)
+
         ]
         
         NSLayoutConstraint.activate(labelConstraints)

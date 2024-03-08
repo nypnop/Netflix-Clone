@@ -44,7 +44,7 @@ class MoviesCollectionViewController: UICollectionViewController {
                 }
                     
             case .failure(let error):
-                print(error)
+                print(error.localizedDescription)
             }
         }
         
@@ -63,7 +63,6 @@ class MoviesCollectionViewController: UICollectionViewController {
         
         let title = titles[indexPath.row]
         cell.configure(with: title.poster_path ?? "")
-//        print(title)
         return cell
     }
     
@@ -76,22 +75,22 @@ class MoviesCollectionViewController: UICollectionViewController {
             return
         }
         
-        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
-        let vc = TitlePreviewViewController()
-        vc.configure(with: viewModel)
-        self.navigationController?.pushViewController(vc, animated: true)
-//        APICaller.shared.getMovie(with: titleName) { [weak self] result in
-//            switch result {
-//            case .success(let videoElement):
-//                DispatchQueue.main.async{
-//                    let vc = TitlePreviewViewController()
-//                    vc.configure(with: TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement))
-//                    self?.navigationController?.pushViewController(vc, animated: true)
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+//        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
+//        let vc = TitlePreviewViewController()
+//        vc.configure(with: viewModel)
+//        self.navigationController?.pushViewController(vc, animated: true)
+        APICaller.shared.getMovie(with: titleName) { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                DispatchQueue.main.async{
+                    let vc = TitlePreviewViewController()
+                    vc.configure(with: TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
 }

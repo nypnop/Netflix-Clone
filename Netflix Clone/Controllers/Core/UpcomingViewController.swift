@@ -50,7 +50,6 @@ class UpcomingViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        print(titles)
     }
     
 
@@ -87,23 +86,22 @@ extension UpcomingViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
-        let vc = TitlePreviewViewController()
-        vc.configure(with: viewModel)
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
+//        let vc = TitlePreviewViewController()
+//        vc.configure(with: viewModel)
+//        self.navigationController?.pushViewController(vc, animated: true)
         
-//        APICaller.shared.getMovie(with: titleName) { [weak self] result in
-//            print("masok")
-//            switch result {
-//            case .success(let videoElement):
-//                DispatchQueue.main.async{
-//                    let vc = TitlePreviewViewController()
-//                    vc.configure(with: TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement))
-//                    self?.navigationController?.pushViewController(vc, animated: true)
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        APICaller.shared.getMovie(with: titleName) { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                DispatchQueue.main.async{
+                    let vc = TitlePreviewViewController()
+                    vc.configure(with: TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

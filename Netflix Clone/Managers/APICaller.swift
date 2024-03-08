@@ -146,15 +146,12 @@ class APICaller {
             
             do {
 //                let results = try JSONSerialization.jsonObject(with: data)
-//                print(results)
                 let results = try JSONDecoder().decode(YoutubeSearchResponse.self, from: data)
-//                print(results)
                 completion(.success(results.items[0]))
                 
 
             } catch {
                 completion(.failure(error))
-//                print(error.localizedDescription)
             }
 
         }
@@ -179,7 +176,7 @@ class APICaller {
             do {
                 reviewsResponse = try JSONDecoder().decode(ReviewsResponse.self, from: data)
             } catch {
-                print(error)
+                print(error.localizedDescription)
             }
         }
         task.resume()
@@ -202,10 +199,8 @@ class APICaller {
             do {
                 let results = try JSONDecoder().decode(GenresResponse.self, from: data)
 //                let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-//                print(results)
                 completion(.success(results.genres))
             } catch {
-                print(error)
                 completion(.failure(APIError.failedToGetData))
             }
         }
@@ -261,10 +256,8 @@ class APICaller {
             do {
                 let results = try JSONDecoder().decode(TrendingTitlesResponse.self, from: data)
                 //                                let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                print(results)
                 completion(.success(results.results))
             } catch {
-                print(error)
                 completion(.failure(APIError.failedToGetData))
             }
         }

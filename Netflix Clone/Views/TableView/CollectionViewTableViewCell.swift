@@ -80,20 +80,20 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
         let title = titles[indexPath.row]
         guard let titleName = title.original_title ?? title.original_name else {return}
         
-        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
-        self.delegate?.CollectionViewTableViewCellDidTapCell(self, viewModel: viewModel)
+//        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
+//        self.delegate?.CollectionViewTableViewCellDidTapCell(self, viewModel: viewModel)
         
-//        APICaller.shared.getMovie(with: titleName + " trailer") { [weak self] result in
-//            switch result {
-//            case .success(let videoElement):
-//                
-//                guard let strongSelf = self else {return}
-//                print(title.id)
-//                let viewModel = TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement)
-//                self?.delegate?.CollectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        APICaller.shared.getMovie(with: titleName + " trailer") { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                
+                guard let strongSelf = self else {return}
+
+                let viewModel = TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement)
+                self?.delegate?.CollectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

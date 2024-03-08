@@ -59,6 +59,7 @@ class PreviewMovieView: UIView {
         return reviewView
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -102,7 +103,7 @@ class PreviewMovieView: UIView {
             topContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             topContentView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            topContentView.heightAnchor.constraint(equalToConstant: 400)
+            topContentView.heightAnchor.constraint(equalToConstant: 300)
         ]
 
         let genreCollectionViewConstraints = [

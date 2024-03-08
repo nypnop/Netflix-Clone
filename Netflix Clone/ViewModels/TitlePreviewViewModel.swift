@@ -9,6 +9,6 @@ import Foundation
 
 struct TitlePreviewViewModel {
     let movie_id: Int
-    let backdrop_path: String?
-//    let youtubeView: VideoElement
+//    let backdrop_path: String?
+    let youtubeView: VideoElement
 }

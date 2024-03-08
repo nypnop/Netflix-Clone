@@ -58,7 +58,6 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         
         let title = titles[indexPath.row]
         cell.configure(with: title.poster_path ?? "")
-//        print(title)
         return cell
         
     }
@@ -68,17 +67,16 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         
         let title = titles[indexPath.row]
         let titleName = title.original_name ?? title.original_title ?? ""
-        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
-        self.delegate?.searchResultViewControllerDidTapItem(viewModel)
-//        APICaller.shared.getMovie(with: titleName) { [weak self] result in
-////            print("masok")
-//            switch result {
-//            case .success(let videoElement):
-//                self?.delegate?.searchResultViewControllerDidTapItem(TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement))
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+//        let viewModel = TitlePreviewViewModel(movie_id: title.id, backdrop_path: title.backdrop_path)
+//        self.delegate?.searchResultViewControllerDidTapItem(viewModel)
+        APICaller.shared.getMovie(with: titleName) { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                self?.delegate?.searchResultViewControllerDidTapItem(TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
         
     }
