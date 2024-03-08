@@ -201,15 +201,14 @@
 		4AAC5B602B8D96F000E364FD /* Netflix Clone */ = {
 			isa = PBXGroup;
 			children = (
-				4AAC5BA02B8DD1D000E364FD /* Managers */,
+				4AF7C7572B9B5962005BB350 /* Router */,
+				4AAC5BA02B8DD1D000E364FD /* Interactor */,
 				4AAC5B9F2B8DD1C800E364FD /* Resources */,
-				4AAC5B9E2B8DD1AC00E364FD /* Models */,
+				4AAC5B9E2B8DD1AC00E364FD /* Entity */,
 				4AAC5B9C2B8DD1A100E364FD /* Views */,
-				4AAC5B9D2B8DD1A500E364FD /* ViewModels */,
-				4AAC5B912B8D977000E364FD /* Controllers */,
+				4AAC5B9D2B8DD1A500E364FD /* Presenter */,
 				4AAC5B612B8D96F000E364FD /* AppDelegate.swift */,
 				4AAC5B632B8D96F000E364FD /* SceneDelegate.swift */,
-				4AAC5B652B8D96F000E364FD /* MainTabBarViewController.swift */,
 				4AAC5B6A2B8D96F200E364FD /* Assets.xcassets */,
 				4AAC5B6C2B8D96F200E364FD /* LaunchScreen.storyboard */,
 				4AAC5B6F2B8D96F200E364FD /* Info.plist */,
@@ -237,7 +236,6 @@
 		4AAC5B912B8D977000E364FD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4AE65C4F2B9A120E00133E90 /* Extension */,
 				4AEED3E12B9747E000A4A57C /* General */,
 				4AEED3E02B973F3D00A4A57C /* Core */,
 			);
@@ -254,16 +252,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		4AAC5B9D2B8DD1A500E364FD /* ViewModels */ = {
+		4AAC5B9D2B8DD1A500E364FD /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
 				4AEED3DC2B97376400A4A57C /* TitleViewModel.swift */,
 				4AC048E82B9818B900354EA3 /* TitlePreviewViewModel.swift */,
 			);
-			path = ViewModels;
+			path = Presenter;
 			sourceTree = "<group>";
 		};
-		4AAC5B9E2B8DD1AC00E364FD /* Models */ = {
+		4AAC5B9E2B8DD1AC00E364FD /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				4A2A6DCA2B9088C000F46A58 /* Title.swift */,
@@ -272,32 +270,25 @@
 				4AD3CA102B987D2D00C0FA4C /* Genre.swift */,
 				4AD3CA122B987E0A00C0FA4C /* Movie.swift */,
 			);
-			path = Models;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		4AAC5B9F2B8DD1C800E364FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4AE65C502B9A121E00133E90 /* ViewControllerExtension.swift */,
 				4A2A6DCC2B908C6500F46A58 /* Extensions.swift */,
 				4AE65C492B99E04800133E90 /* PaddingLabel.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		4AAC5BA02B8DD1D000E364FD /* Managers */ = {
+		4AAC5BA02B8DD1D000E364FD /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
 				4A2A6DC82B90812800F46A58 /* APICaller.swift */,
 			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
-		4AE65C4F2B9A120E00133E90 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				4AE65C502B9A121E00133E90 /* ViewControllerExtension.swift */,
-			);
-			path = Extension;
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		4AEED3E02B973F3D00A4A57C /* Core */ = {
@@ -320,6 +311,15 @@
 				4ABE38482B9AC12200DA3902 /* ResultViewController.swift */,
 			);
 			path = General;
+			sourceTree = "<group>";
+		};
+		4AF7C7572B9B5962005BB350 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				4AAC5B912B8D977000E364FD /* Controllers */,
+				4AAC5B652B8D96F000E364FD /* MainTabBarViewController.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
