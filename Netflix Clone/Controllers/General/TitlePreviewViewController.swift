@@ -30,7 +30,6 @@ class TitlePreviewViewController: UIViewController {
         previewMovieView.reviewView.reviewTable.dataSource = self
         previewMovieView.reviewView.reviewTable.delegate = self
         
-        
     }
     
     func configure(with model: TitlePreviewViewModel) {
@@ -72,7 +71,6 @@ class TitlePreviewViewController: UIViewController {
         handleReviewData(reviews: reviewResponse.results)
         
 //        resizeScrollView()
-        
     }
     
     func getVoteAverage(voteAverage: Float) -> String {
@@ -133,6 +131,7 @@ class TitlePreviewViewController: UIViewController {
 //        
 //        previewMovieView.scrollView.contentSize = contentRect.size
 //    }
+
     
 }
 
@@ -152,7 +151,6 @@ extension TitlePreviewViewController: UICollectionViewDataSource, UICollectionVi
         return setGenreCell(collectionView: collectionView, indexPath: indexPath)
         
     }
-    
     
     func setGenreCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -199,5 +197,3 @@ extension TitlePreviewViewController: UITableViewDataSource, UITableViewDelegate
     
     
 }
-
-

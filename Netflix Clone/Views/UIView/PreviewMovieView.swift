@@ -59,7 +59,6 @@ class PreviewMovieView: UIView {
         return reviewView
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -115,6 +114,7 @@ class PreviewMovieView: UIView {
 
         let overviewLabelConstraints = [
             overviewLabel.topAnchor.constraint(equalTo: genreCollectionView.bottomAnchor, constant: 15),
+
             overviewLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             overviewLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ]
@@ -133,10 +133,5 @@ class PreviewMovieView: UIView {
         NSLayoutConstraint.activate(overviewLabelConstraints)
         NSLayoutConstraint.activate(reviewViewConstraints)
     }
-
     
-    
-    
-    
-
 }

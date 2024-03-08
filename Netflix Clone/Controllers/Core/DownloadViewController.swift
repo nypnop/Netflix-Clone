@@ -36,7 +36,6 @@ class DownloadViewController: UIViewController {
         super.viewDidLayoutSubviews()
         genreTable.frame = view.bounds
     }
-    
     private func fetchGenres() {
         APICaller.shared.getMoviesGenre() { [weak self] result in
             switch result {
@@ -49,6 +48,7 @@ class DownloadViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
+
     }
 }
     

@@ -12,7 +12,6 @@ struct Constants {
     static let baseURL = "https://api.themoviedb.org"
 //    static let YT_API_KEY = "AIzaSyC25R9FVPQSH2btuPxYh7NDrj7WLERDkDU"
     static let YoutubeAPI_KEY = "AIzaSyB1ydvqUXguvvWy51zEfSKOWiJTmMLqo2s"
-//    static let YoutubeAPI_KEY = "AIzaSyC25R9FVPQSH2btuPxYh7NDrj7WLERDkDU"
     static let YoutubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
 }
 

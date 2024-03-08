@@ -81,7 +81,7 @@ class TopContentView: UIView {
 //        super.layoutSubviews()
 //        webView.frame = bounds
 //    }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         

@@ -88,7 +88,6 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
             case .success(let videoElement):
                 
                 guard let strongSelf = self else {return}
-
                 let viewModel = TitlePreviewViewModel(movie_id: title.id, youtubeView: videoElement)
                 self?.delegate?.CollectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
             case .failure(let error):
